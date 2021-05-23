@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 using namespace std;
+void getOption(char sudokuBoard[][9]);
 #define empty 0
 #define N 9
 bool isGridSafe(int grid[N][N], int row, int col, int num);
@@ -79,6 +80,29 @@ void printResult(int finalgrid[N][N])
         cout<<endl;
     }
 }
+    
+    oid getOption(char sudokuBoard[][9])
+{
+   char option;
+   cout << "> ";
+   cin >> option;
+
+   if (option == 'e' || option == 'E')
+      editSquare(sudokuBoard);
+   else if (option == '?')
+      interact();
+   else if (option == 'd' || option == 'D')
+      display(sudokuBoard);
+   else if (option == 's' || option == 'S')
+      showValues();
+   else if (option == 'q' || option == 'Q')
+      writeFile(sudokuBoard);
+   else
+      cout << "ERROR: Invalid command";
+
+   return;
+}
+    
 /* Main */
 int main()
 {
