@@ -2,7 +2,11 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <type_traits>
 using namespace std;
+
+void getOption(char sudokuBoard[][9]);
+
 #define empty 0
 #define N 9
 bool isGridSafe(int grid[N][N], int row, int col, int num);
@@ -50,18 +54,17 @@ bool UsedInCol(int grid[N][N], int pcol, int number)
     for (int row = 0; row < N; row++)
         if (grid[row][pcol] == number)
             return true;
-  else 
      return false;
+}    
 //Check if the entry used already in the grid box
 bool UsedInBox(int grid[N][N], int boxBeginRow, int boxBeginCol, int number)
 
 {
-    bool tf = false;
     for (int row = 0; row < 3; row++)
         for (int col = 0; col < 3; col++)
             if (grid[row+boxBeginRow][col+boxBeginCol] == number)
-                tf = true;
-    return tf;
+                return true;
+    return false;
 }
 /* Checks if num can be assigned to a given prow,pcol location. */
 bool isGridSafe(int grid[N][N], int prow, int pcol, int number)
@@ -79,6 +82,29 @@ void printResult(int finalgrid[N][N])
         cout<<endl;
     }
 }
+
+void getOption(char sudokuBoard[][9])
+{
+   char option;
+   cout << "> ";
+   cin >> option;
+
+   if (option == 'e' || option == 'E')
+      editSquare(sudokuBoard);
+   else if (option == '?')
+      interact();
+   else if (option == 'd' || option == 'D')
+      display(sudokuBoard);
+   else if (option == 's' || option == 'S')
+      showValues();
+   else if (option == 'q' || option == 'Q')
+      writeFile(sudokuBoard);
+   else
+      cout << "ERROR: Invalid command";
+
+   return;
+}
+
 /* Main */
 int main()
 {
